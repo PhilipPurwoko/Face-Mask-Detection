@@ -51,6 +51,9 @@ Non-trainable params: 0
 <p align="center">
     <img style="float: right;" src="output/prediction_test_test_masked.jpg">
     <img style="float: right;" src="output/prediction_test_budis2.jpg">
+</p>
+
+<p align="center">
     <img style="float: right;" src="output/prediction_test_woman.jpg">
     <img style="float: right;" src="output/prediction_test_test_nomask.jpg">
 </p>
