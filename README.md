@@ -2,10 +2,10 @@
 Deteksi pemakaian masker dengan Artificial Intelligence. Dibangun dengan Tensorflow Python menggunakan Deep Learning
 
 ## :file_folder: Dataset
-Saya mendapatkan dataset dari Kaggle (https://www.kaggle.com/omkargurav/face-mask-dataset)
+Saya mendapatkan dataset dari Kaggle (https://www.kaggle.com/omkargurav/face-mask-dataset). Data terdiri dari 7553 foto. Foto berekstensi `.jpg` dengan 3 channel (RGB). 3725 foto wajah dengan masker dan 3828 foto wajah tanpa masker dengan ukuran foto yang beragam.
 
 ## :brain: Neural Network
-Saya menggunakan Convolutional (CNN) standar untuk pemakaian image classification dengan menggunakan 2 neuron sebagai output dengan `softmax` activation karena saya ingin mendapatkan output secara categorical. Saya telah mencoba mengguanakan `sigmoid` sebelumnya dan perbedaanya tidak terlalu signifikan
+Saya menggunakan Convolutional (CNN) standar untuk pemakaian image classification dengan menggunakan 2 neuron sebagai output dengan `softmax` activation karena saya ingin mendapatkan output secara categorical. Saya telah mencoba mengguanakan `sigmoid` sebelumnya dan perbedaanya tidak terlalu signifikan.
 
 **Struktur CNN**
 ```
@@ -53,5 +53,19 @@ Non-trainable params: 0
     <img style="float: right;" src="output/prediction_test_budis2.jpg">
 </p>
 
+<p align="center">
+    <img style="float: right;" src="output/prediction_test_woman.jpg">
+    <img style="float: right;" src="output/prediction_test_test_nomask.jpg">
+</p>
+
 ## :movie_camera: Aplikasi
-Model yang telah dilatih dapat disimpan dalam bentuk `model.h5` dan dapat dideploy sebagai API agar dapat digunakan di platform yang berbeda untuk membuat aplikasi `face mask detection` secara real time melalui kamera
+Model yang telah dilatih dapat disimpan dalam bentuk `model.h5` dan dapat dideploy sebagai API agar dapat digunakan di platform yang berbeda untuk membuat aplikasi `face mask detection` secara real time melalui kamera atau menggunakan video.
+
+## :thumbsup: Keunggulan Project
+Relate dan sesuai dengan kondisi pada tahun 2020 dan masa pandemi COVID-19 dimana semua orang diwajibkan memakai masker, maka membuat project seperti ini adalah kegiatan produktif yang kreatif. Jika Neural Network dibuat dengan Transfer Learning dan menggunakan dataset yang besar, mungkin NN bisa diaplikasikan di CCTV pintu masuk gedung, gerbang, dll untuk mencegah masuknya orang yang tidak memakai masker.
+
+## :thumbsdown: Kelemahan NN
+Sejauh ini NN model dapat bekerja dengan baik, namun memiliki kelemahan. Algoritma dan Neural Network sudah tersusun dengan baik, penambahan data akan meningkatakan kualitas model secara signifikan. Berikut merupakan beberapa kelemahan yang sudah ditemukan sejauh ini.
+- Masker berwarna coklat / _blend_ dengan warna kulit tidak bisa terdeteksi oleh NN
+- Jika menggunakan NN secara real time, pergerakan yang banyak dapat mengganggu
+- Hanya dapat mendeteksi 1 wajah dalam 1 foto. Untuk membuatnya bisa multiple harus dikombinasikan dengan `face detection`

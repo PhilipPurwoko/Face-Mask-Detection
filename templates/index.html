@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Mask Detection</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .graphic {
+            width: 500px;
+            border: 2px solid darkslategrey;
+        }
+
+        .controls {
+            width: 100%;
+            text-align: center;
+        }
+        
+        #video {
+            width: 500px;
+            height: 375px;
+            background-color: #666;
+        }
+
+        #canvas {
+            width: 500px;
+            height: 375px;
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="graphic">
+        <video autoplay="true" id="video"></video>
+    </div>
+    <div class="controls">
+        <button onclick="start()">Start</button>
+        <button onclick="stop()">Stop</button>
+        <form action="/detection" method="POST" onsubmit="capture()">
+            <input type="hidden" id="canvasimg" name="canvasimg">
+            <input type="hidden" id="canvasdata" name="canvasdata" value="{{ canvasdata }}">
+            <button>Capture</button>
+        </form>
+    </div>
+    <div class="graphic">
+        <canvas id="canvas" width="500px" height="375px"></canvas>
+    </div>
+    
+    <!-- Javascript -->
+    <script>
+        window.addEventListener('load', ()=>{
+            const video = document.querySelector("#video");
+            const canvas = document.querySelector('#canvas');
+            const context = canvas.getContext('2d');
+
+            start();
+            const canvasdata = document.querySelector('#canvasdata').value;
+            if (canvasdata){
+                const image = new Image();
+                image.onload = ()=>{
+                    context.drawImage(image, 0, 0);
+                };
+                image.src = canvasdata;
+            }
+        });
+
+        const start = ()=>{
+            if (!video.srcObject){
+                if (navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+                        video.srcObject = stream;
+                    }).catch(function (err) {
+                        console.log("Something went wrong!");
+                        console.log(err);
+                    });
+                }
+            }
+        };
+
+        const stop = ()=>{
+            const stream = video.srcObject;
+            if (stream){
+                const tracks = stream.getTracks();
+                for (let i = 0; i < tracks.length; i++) {
+                    let track = tracks[i];
+                    track.stop();
+                }
+                video.srcObject = null;
+            }
+        };
+
+        const capture = ()=>{
+            const video = document.querySelector("#video");
+            canvas.getContext('2d').drawImage(video, 0, 0, 500, 375);
+            document.getElementById('canvasimg').value = canvas.toDataURL();
+        };
+    </script>
+</body>
+</html>

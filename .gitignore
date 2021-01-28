@@ -1,3 +1,6 @@
 data
 dataset
 face-mask-dataset.zip
+*.avi
+*.mp4
+*.h5
